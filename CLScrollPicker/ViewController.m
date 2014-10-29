@@ -20,7 +20,7 @@
     NSArray *stringArr = @[@"String One",@"String Two",@"String Three",@"String Four",@"String Five",@"String Six",@"String Seven",@"String Eight",@"String Nine",@"String Ten",@"String Eleven",@"String Twelve",@"String Thirteen",@"String Fourteen",@"String Fifteen"];
     CLScrollPickerView *pickerView = [[CLScrollPickerView alloc]initWithFrame:CGRectMake(0, 200, 320, 200)];
     [pickerView setStringArr:stringArr];
-    //pickerView.delegate = self;
+    pickerView.delegate = self;
     [self.view addSubview:pickerView];
 }
 

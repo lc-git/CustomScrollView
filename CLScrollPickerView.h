@@ -18,7 +18,7 @@
 
 @end
 
-@interface CLScrollPickerView : UIScrollView<UIScrollViewDelegate>{
+@interface CLScrollPickerView : UIView<UIScrollViewDelegate>{
     NSMutableArray *labelArr;
     UIScrollView *baseScrollView;
 }
@@ -28,6 +28,6 @@
 @property(nonatomic)NSInteger selectedRow;
 @property(nonatomic)float widthOffset;
 
-//@property(nonatomic, weak)id<CLScrollPickerDelegate> delegate;
+@property(nonatomic, weak)id<CLScrollPickerDelegate> delegate;
 
 @end

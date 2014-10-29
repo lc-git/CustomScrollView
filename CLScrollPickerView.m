@@ -30,12 +30,12 @@
 
 -(void)initWithSelectedRow:(NSInteger)row{
     if (_rowSize.width == 0 && _rowSize.height == 0) {
-        _rowSize = CGSizeMake(self.frame.size.width - 2 * _widthOffset, self.frame.size.height/5);
+        _rowSize = CGSizeMake(baseScrollView.frame.size.width - 2 * _widthOffset, baseScrollView.frame.size.height/5);
     }
     
-    //[self addSubview:baseScrollView];
-    self.showsHorizontalScrollIndicator = NO;
-    self.showsVerticalScrollIndicator = NO;
+    [self addSubview:baseScrollView];
+    baseScrollView.showsHorizontalScrollIndicator = NO;
+    baseScrollView.showsVerticalScrollIndicator = NO;
     _selectedRow = row;
     
     if (_stringArr.count > 0) {
@@ -46,13 +46,13 @@
             tmpLabel.layer.borderColor = [[UIColor blackColor] CGColor];
             tmpLabel.layer.borderWidth = 1.0;
             [labelArr addObject:tmpLabel];
-            [self addSubview:tmpLabel];
+            [baseScrollView addSubview:tmpLabel];
         }
-        self.delegate = self;
-        self.contentInset = UIEdgeInsetsMake(self.frame.size.height/2 - _rowSize.height/2, 0, self.frame.size.height/2 - _rowSize.height/2, 0);
-        self.contentSize = CGSizeMake(self.frame.size.width, _stringArr.count * _rowSize.height);
-        float midViewY = -self.frame.size.height/2 + _rowSize.height/2 + row * _rowSize.height;
-        self.contentOffset = CGPointMake(0, midViewY);
+        baseScrollView.delegate = self;
+        baseScrollView.contentInset = UIEdgeInsetsMake(baseScrollView.frame.size.height/2 - _rowSize.height/2, 0, baseScrollView.frame.size.height/2 - _rowSize.height/2, 0);
+        baseScrollView.contentSize = CGSizeMake(baseScrollView.frame.size.width, _stringArr.count * _rowSize.height);
+        float midViewY = -baseScrollView.frame.size.height/2 + _rowSize.height/2 + row * _rowSize.height;
+        baseScrollView.contentOffset = CGPointMake(0, midViewY);
         [self reloadView:row];
 //        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 //        dispatch_async(queue, ^ {
@@ -93,17 +93,19 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     if (decelerate == NO) {
         int num = floor((scrollView.contentOffset.y + scrollView.contentInset.top + _rowSize.height/2)/_rowSize.height) ;
-        float midViewY = -self.frame.size.height/2 + _rowSize.height/2 + num * _rowSize.height;
+        float midViewY = -baseScrollView.frame.size.height/2 + _rowSize.height/2 + num * _rowSize.height;
         [scrollView setContentOffset:CGPointMake(0, midViewY) animated:YES];
         _selectedRow = num;
+            [self.delegate pickerview:self selectedRow:_selectedRow];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int num = floor((scrollView.contentOffset.y + scrollView.contentInset.top + _rowSize.height/2)/_rowSize.height) ;
-    float midViewY = -self.frame.size.height/2 + _rowSize.height/2 + num * _rowSize.height;
+    float midViewY = -baseScrollView.frame.size.height/2 + _rowSize.height/2 + num * _rowSize.height;
     [scrollView setContentOffset:CGPointMake(0, midViewY) animated:YES];
     _selectedRow = num;
+    [self.delegate pickerview:self selectedRow:_selectedRow];
 }
 
 -(void)reloadView:(NSInteger)index{
