@@ -14,6 +14,7 @@
 		E5CE744619FF65680066B557 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE744519FF65680066B557 /* Images.xcassets */; };
 		E5CE744919FF65680066B557 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5CE744719FF65680066B557 /* LaunchScreen.xib */; };
 		E5CE745519FF65680066B557 /* CLScrollPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CE745419FF65680066B557 /* CLScrollPickerTests.m */; };
+		E5CE74601A0000BE0066B557 /* CLScrollPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CE745F1A0000BE0066B557 /* CLScrollPickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		E5CE744E19FF65680066B557 /* CLScrollPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CLScrollPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE745319FF65680066B557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5CE745419FF65680066B557 /* CLScrollPickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLScrollPickerTests.m; sourceTree = "<group>"; };
+		E5CE745E1A0000BE0066B557 /* CLScrollPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLScrollPickerView.h; sourceTree = SOURCE_ROOT; };
+		E5CE745F1A0000BE0066B557 /* CLScrollPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLScrollPickerView.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				E5CE743D19FF65680066B557 /* AppDelegate.m */,
 				E5CE743F19FF65680066B557 /* ViewController.h */,
 				E5CE744019FF65680066B557 /* ViewController.m */,
+				E5CE745E1A0000BE0066B557 /* CLScrollPickerView.h */,
+				E5CE745F1A0000BE0066B557 /* CLScrollPickerView.m */,
 				E5CE744219FF65680066B557 /* Main.storyboard */,
 				E5CE744519FF65680066B557 /* Images.xcassets */,
 				E5CE744719FF65680066B557 /* LaunchScreen.xib */,
@@ -221,6 +226,7 @@
 			files = (
 				E5CE744119FF65680066B557 /* ViewController.m in Sources */,
 				E5CE743E19FF65680066B557 /* AppDelegate.m in Sources */,
+				E5CE74601A0000BE0066B557 /* CLScrollPickerView.m in Sources */,
 				E5CE743B19FF65670066B557 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CLScrollPickerView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<CLScrollPickerDelegate>
 
 
 @end
