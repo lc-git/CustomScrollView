@@ -27,6 +27,8 @@
 @property(nonatomic)CGSize rowSize;
 @property(nonatomic)NSInteger selectedRow;
 @property(nonatomic)float widthOffset;
+@property(nonatomic, strong)UIColor *rowBackground;
+@property(nonatomic, strong)UIColor *rowBorderColor;
 
 @property(nonatomic, weak)id<CLScrollPickerDelegate> delegate;
 

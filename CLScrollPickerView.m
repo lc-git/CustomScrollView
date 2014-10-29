@@ -15,7 +15,8 @@
     if (self) {
         _selectedRow = 0;
         _widthOffset = 20.0;
-        
+        _rowBackground = [UIColor lightGrayColor];
+        _rowBorderColor = [UIColor blackColor];
         _stringArr = [[NSArray alloc] init];
         labelArr = [[NSMutableArray alloc] init];
         baseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
@@ -25,7 +26,7 @@
 
 
 -(void)initScrollView{
-    [self initWithSelectedRow:5];
+    [self initWithSelectedRow:_selectedRow];
 }
 
 -(void)initWithSelectedRow:(NSInteger)row{
@@ -42,8 +43,9 @@
         for (int i=0; i < _stringArr.count; i++) {
             UILabel *tmpLabel = [[UILabel alloc]initWithFrame:CGRectMake(_widthOffset, i * _rowSize.height, _rowSize.width, _rowSize.height)];
             tmpLabel.text = _stringArr[i];
-            [tmpLabel setBackgroundColor:[UIColor lightGrayColor]];
-            tmpLabel.layer.borderColor = [[UIColor blackColor] CGColor];
+            [tmpLabel setContentMode:UIViewContentModeCenter];
+            [tmpLabel setBackgroundColor:_rowBackground];
+            tmpLabel.layer.borderColor = [_rowBorderColor CGColor];
             tmpLabel.layer.borderWidth = 1.0;
             [labelArr addObject:tmpLabel];
             [baseScrollView addSubview:tmpLabel];
@@ -54,13 +56,6 @@
         float midViewY = -baseScrollView.frame.size.height/2 + _rowSize.height/2 + row * _rowSize.height;
         baseScrollView.contentOffset = CGPointMake(0, midViewY);
         [self reloadView:row];
-//        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//        dispatch_async(queue, ^ {
-//            [self reloadView:row];
-//            dispatch_async(dispatch_get_main_queue(), ^ {
-//                //[self snapToAnEmotion];
-//            });
-//        });
     }
     
     
@@ -83,10 +78,20 @@
     [self initScrollView];
 }
 
+-(void)setSelectedRow:(NSInteger)selectedRow{
+    _selectedRow = selectedRow;
+    [self initScrollView];
+}
+
 
 #pragma ScrollView Delegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     int num = floor((scrollView.contentOffset.y + scrollView.contentInset.top + _rowSize.height/2)/_rowSize.height);
+    if (num < 0) {
+        num = 0;
+    }else if(num >= _stringArr.count){
+        num = _stringArr.count - 1;
+    }
     [self reloadView:num];
 }
 
@@ -96,7 +101,9 @@
         float midViewY = -baseScrollView.frame.size.height/2 + _rowSize.height/2 + num * _rowSize.height;
         [scrollView setContentOffset:CGPointMake(0, midViewY) animated:YES];
         _selectedRow = num;
+        if ([self.delegate respondsToSelector:@selector(pickerview:selectedRow:)]) {
             [self.delegate pickerview:self selectedRow:_selectedRow];
+        }
     }
 }
 
@@ -105,16 +112,16 @@
     float midViewY = -baseScrollView.frame.size.height/2 + _rowSize.height/2 + num * _rowSize.height;
     [scrollView setContentOffset:CGPointMake(0, midViewY) animated:YES];
     _selectedRow = num;
-    [self.delegate pickerview:self selectedRow:_selectedRow];
+    if ([self.delegate respondsToSelector:@selector(pickerview:selectedRow:)]) {
+        [self.delegate pickerview:self selectedRow:_selectedRow];
+    }
 }
 
 -(void)reloadView:(NSInteger)index{
-    id biggestView;
     for (int i=0; i < labelArr.count; i++) {
         UILabel *view = [labelArr objectAtIndex:i];
         if (i == index){
-            view.frame = CGRectMake(0, view.frame.origin.y, _rowSize.width + 2*_widthOffset, _rowSize.height);
-            biggestView = view;
+            view.frame = CGRectMake(0, view.frame.origin.y, _rowSize.width + 2*_widthOffset, _rowSize.height + _widthOffset);
         } else {
             view.frame = CGRectMake(_widthOffset, view.frame.origin.y, _rowSize.width, _rowSize.height);
         }
@@ -132,7 +139,7 @@
         }
     }
     
-    [(UIView *)biggestView setAlpha:1.0];
+    [(UIView *)[labelArr objectAtIndex:index] setAlpha:1.0];
 }
 
 
